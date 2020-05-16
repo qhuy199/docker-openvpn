@@ -13,14 +13,14 @@ set -e
 cd $OPENVPN
 
 # Build runtime arguments array based on environment
-USER_ARGS=("${@}")
+USER_ARGS=("${@}") # get all argument
 ARGS=()
 
 # Checks if ARGS already contains the given value
 function hasArg {
     local element
-    for element in "${@:2}"; do
-        [ "${element}" == "${1}" ] && return 0
+    for element in "${@:2}"; do #get all argument from 2nd arg to the end
+        [ "${element}" == "${1}" ] && return 0 #Lay phan tu dau tien de so sanh, neu rong thi return 0, neu khong rong thi chay for tiep
     done
     return 1
 }
@@ -28,7 +28,7 @@ function hasArg {
 # Adds the given argument if it's not already specified.
 function addArg {
     local arg="${1}"
-    [ $# -ge 1 ] && local val="${2}"
+    [ $# -ge 1 ] && local val="${2}" # neu tong so arg truyen vao >= 1 thi khai bao val = bien thu 2
     if ! hasArg "${arg}" "${USER_ARGS[@]}"; then
         ARGS+=("${arg}")
         [ $# -ge 1 ] && ARGS+=("${val}")
